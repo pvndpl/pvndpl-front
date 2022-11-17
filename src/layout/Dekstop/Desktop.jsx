@@ -12,7 +12,8 @@ import Groups from "../../components/Groups/Groups"
 import Settings from "../../components/Settings/Settings";
 import Musics from "../../components/Musics/Musics";
 
-const Desktop = () => {
+const Desktop = (props) => {
+    console.log( props)
     return (
         <div className={style.App}>
             <Header/>
@@ -22,7 +23,7 @@ const Desktop = () => {
                     <Route path="/pvndpl-front/">
                         <Route path="content/*" element={<Content/>}/>
                         <Route path="newsfeed" element={<NewsFeed/>}/>
-                        <Route path="messages/*" element={<Messages/>}/>
+                        <Route path="messages/*" element={<Messages messages={props.state.dialogsPage} dispatch={props.dispatch}/>}/>
                         <Route path="friends" element={<Friends/>}/>
                         <Route path="groups" element={<Groups/>}/>
                         <Route path="musics" element={<Musics/>}/>

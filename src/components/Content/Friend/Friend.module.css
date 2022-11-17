@@ -30,13 +30,13 @@
     height: 256px;
     width: 256px;
     border-radius: 50%;
-
 }
 
 .name {
     font-size: 1.5rem;
     color: #3E3F5E;
     text-align: center;
+    cursor: pointer;
 }
 
 .tag {
@@ -67,7 +67,23 @@
 
 @media screen and (max-width: 1162px) {
     .users {
+        grid-template-columns: repeat(3, auto);
+    }
+    .headerInfoImg {
+        height: 128px;
+        width: 128px;
+    }
+
+}
+
+@media screen and (max-width: 732px) {
+    .users {
         grid-template-columns: repeat(2, auto);
+    }
+
+    .headerInfoImg {
+        height: 128px;
+        width: 128px;
     }
 
 }
