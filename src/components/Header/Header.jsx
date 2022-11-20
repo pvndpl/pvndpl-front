@@ -30,7 +30,9 @@ const Header = ({updateActive}) => {
                         <h1 className={style.headerBrandText}>ПИВАНДОПАЛА</h1>
                     </Link>
                 </div>
-                <a href={"#"} className={style.login}>Войти</a>
+                <Link className={style.headerBrand} to={"/pvndpl-front/login"}>
+                        <h1 className={style.headerBrandText}>Войти</h1>
+                    </Link>
             </header>
         );
     }

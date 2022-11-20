@@ -8,9 +8,8 @@ import Messages from "../../components/Messages/Messages";
 import NotFoundPage from "../../components/NotFoundPage/NotFoundPage";
 import NewsFeed from "../../components/NewsFeed/NewsFeed";
 import Friends from "../../components/Friends/Friends";
-import Groups from "../../components/Groups/Groups"
-import Settings from "../../components/Settings/Settings";
-import Musics from "../../components/Musics/Musics";
+import Groups from "../../components/Groups/Groups";
+import Login from "../../components/Login/Login"
 
 const Desktop = (props) => {
     console.log( props)
@@ -26,6 +25,7 @@ const Desktop = (props) => {
                         <Route path="messages/*" element={<Messages messages={props.state.dialogsPage} dispatch={props.dispatch}/>}/>
                         <Route path="friends" element={<Friends/>}/>
                         <Route path="groups" element={<Groups/>}/>
+                        <Route path="login" element={<Login/>}/>
                     </Route>
                     <Route path="*" element={<NotFoundPage/>}/>
                 </Routes>
