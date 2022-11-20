@@ -1,78 +1,152 @@
-import React from 'react';
-import styles from './Posts.module.css';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import CommentIcon from '@mui/icons-material/Comment';
-import {IconButton} from "@mui/material";
 
-const Posts = () => (
-    <div data-testid="Posts">
-        <div className={styles.widgetBox}>
-            <form className={styles.formInput}>
-                <img className={styles.photo}
-                     src={"https://sun9-49.userapi.com/s/v1/ig2/H1XhBOxwr2MHKZQMz4EZqnyVNphwFvAvuj2f752anMfxdKTI_ZL2t75AVA8NfSNDarBiParWLIpgORQqP5QTVE9s.jpg?size=200x200&quality=95&crop=0,68,1428,1428&ava=1"}/>
-                <textarea cols={5} rows={120} className={styles.input} placeholder={"Что у вас нового?"}/>
-                <button className={styles.inputButton}>Опубликовать</button>
-            </form>
-        </div>
-        <div className={styles.posts}>
-            <div className={styles.post}>
-                <div className={styles.info}>
-                    <img className={styles.photo}
-                         src={"https://sun9-49.userapi.com/s/v1/ig2/H1XhBOxwr2MHKZQMz4EZqnyVNphwFvAvuj2f752anMfxdKTI_ZL2t75AVA8NfSNDarBiParWLIpgORQqP5QTVE9s.jpg?size=200x200&quality=95&crop=0,68,1428,1428&ava=1"}/>
-                    <p className={styles.name}>Адександр Великодный</p>
-                </div>
-                <div className={styles.content}>
-                    <h4>Новости с фронта:</h4>
-                    <p className={styles.text}>
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import './Posts.css';
+import './founation.css'
 
-                        ВСУ нанесли очередной удар РСЗО "Хаймерс" (4 ракеты) по комплексу Дома культуры г.Стаханова.
-                        Комплекс сильно поврежден и частично разрушен.
 
-                        Вчера противник впервые за долгое время применил в районе Старомихайловки (западнее Донецка)
-                        свою авиацию - нанеся удары по позициям наших войск сначала с самолётов, потом - с вертолётов.
-                        Как написал мне местный комментатор: "У нашего ПВО по воскресеньям традиционно выходной". (Это
-                        на счет нашего "полного господства в воздухе").
-                        По всему Донецкому фронту продолжались взаимные артиллерийские удары, противник продолжал
-                        подтягивать свежие резервы.</p>
-                    <img className={styles.contentImage}
-                         src={" https://sun9-76.userapi.com/impg/jdZ0yaNP3joEiKIBAHuyYAXTlJRIxDnTlw6m1g/fryLyHI7S3k.jpg?size=621x399&quality=96&sign=826206093af1817e5a056ccd3b280489&type=album"}/>
-                </div>
-                <div className={styles.reaction}>
-                    <IconButton>
-                        <FavoriteBorderIcon style={{marginRight: "15px"}}/>
-                    </IconButton>
-                    <IconButton>
-                        <CommentIcon/>
-                    </IconButton>
-                </div>
+const categories = ['World', 'Business', 'Tech', 'Sport'];
+
+class Posts extends Component {
+    render() {
+        return (
+            <div className="NewsFeed">
+                <Feed />
             </div>
-        </div>
-        <div className={styles.posts}>
-            <div className={styles.post}>
-                <div className={styles.info}>
-                    <img className={styles.photo}
-                         src={"https://sun9-49.userapi.com/s/v1/ig2/H1XhBOxwr2MHKZQMz4EZqnyVNphwFvAvuj2f752anMfxdKTI_ZL2t75AVA8NfSNDarBiParWLIpgORQqP5QTVE9s.jpg?size=200x200&quality=95&crop=0,68,1428,1428&ava=1"}/>
-                    <p className={styles.name}>Адександр Великодный</p>
-                </div>
-                <div className={styles.content}>
-                    <p className={styles.text}>⚡ 2Pac со своими кабанами ограбил местную маршрутку на 500 рублей
+        );
+    }
+}
 
-                        Молодеж за которую не стыдно🙏
-                    </p>
-                    <img className={styles.contentImage}
-                         src={"https://sun9-50.userapi.com/impg/DE8kb639VVRaxjxiGZWJAiQNEB7htTNl0DyFpQ/JVKJ7T2gDU4.jpg?size=1080x1304&quality=95&sign=350a058d85c0feb3125e446309253ed6&type=album"}/>
-                </div>
-                <div className={styles.reaction}>
-                    <IconButton>
-                        <FavoriteBorderIcon style={{marginRight: "15px"}}/>
-                    </IconButton>
-                    <IconButton>
-                        <CommentIcon/>
-                    </IconButton>
-                </div>
+class Feed extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            posts: JSON.parse(localStorage.getItem('posts')) || [],
+            filteredPosts: []
+        }
+
+        this.handleNewPost = this.handleNewPost.bind(this);
+        this.handleFilter = this.handleFilter.bind(this);
+    }
+
+    handleNewPost(post) {
+        var posts = this.state.posts.concat([post]);
+        this.setState({posts: posts});
+        localStorage.setItem('posts', JSON.stringify(posts));
+    }
+
+    handleFilter(filter) {
+        this.setState({
+            filteredPosts: this.state.posts.filter((post) =>
+                post.category.toUpperCase() === filter.toUpperCase() ||
+                post.content.includes(filter)
+            )
+        });
+    }
+
+    render() {
+        const posts = this.state.posts.map((post, index) =>
+            <Post key={index} value={post} />
+        );
+        const filteredPosts = this.state.filteredPosts.map((post, index) =>
+            <Post key={index} value={post} />
+        );
+        return (
+            <div className="feed">
+                <Filter onFilter={this.handleFilter} />
+                {filteredPosts.length > 0 ? filteredPosts : posts}
+                <PostForm onSubmit={this.handleNewPost} />
             </div>
-        </div>
-    </div>
-);
+        )
+    }
+}
+
+class Post extends Component {
+    render() {
+        return (
+            <div className="post">
+                <span className="label">{this.props.value.category}</span>
+                <span className="content">{this.props.value.content}</span>
+            </div>
+        )
+    }
+}
+
+class PostForm extends Component {
+    constructor(props) {
+        super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(event) {
+        this.props.onSubmit({
+            category: this.category.value,
+            content: this.content.value
+        });
+        this.category.value = categories[0];
+        this.content.value = '';
+        event.preventDefault();
+    }
+
+    render() {
+        return (
+            <div className="post-form">
+                <form onSubmit={this.handleSubmit}>
+                    <label>
+                        Category:
+                        <select ref={(input) => this.category = input}>
+                            {categories.map((category, index) =>
+                                <option key={category} value={category}>{category}</option>
+                            )}
+                        </select>
+                    </label>
+                    <label>
+                        Content:
+                        <input type="text" ref={(input) => this.content = input} />
+                    </label>
+                    <button className="button">Submit</button>
+                </form>
+            </div>
+        )
+    }
+}
+
+class Filter extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {value: ''};
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleKeyUp = this.handleKeyUp.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({value: event.target.value});
+        if (event.target.value === '') {
+            this.props.onFilter('');
+        }
+    }
+
+    handleKeyUp(event) {
+        if (event.key === 'Enter') {
+            this.props.onFilter(this.state.value);
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                <label>
+                    <input type="search" value={this.state.value}
+                           onChange={this.handleChange}
+                           onKeyUp={this.handleKeyUp}
+                           placeholder="Filter by category or content..." />
+                </label>
+            </div>
+        )
+    }
+}
 
 export default Posts;
+
+

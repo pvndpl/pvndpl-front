@@ -26,8 +26,6 @@ const Desktop = (props) => {
                         <Route path="messages/*" element={<Messages messages={props.state.dialogsPage} dispatch={props.dispatch}/>}/>
                         <Route path="friends" element={<Friends/>}/>
                         <Route path="groups" element={<Groups/>}/>
-                        <Route path="musics" element={<Musics/>}/>
-                        <Route path="settings" element={<Settings/>}/>
                     </Route>
                     <Route path="*" element={<NotFoundPage/>}/>
                 </Routes>

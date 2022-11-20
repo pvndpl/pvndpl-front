@@ -18,8 +18,6 @@ const Navbar = () => {
                 <MenuItem icon={<ChatIcon/>} text={"Сообщения"} path={"/pvndpl-front/messages"}/>
                 <MenuItem icon={<GroupIcon/>} text={"Друзья"} path={"/pvndpl-front/friends"}/>
                 <MenuItem icon={<GroupsIcon/>} text={"Сообщества"} path={"/pvndpl-front/groups"}/>
-                <MenuItem icon={<LibraryMusicIcon/>} text={"Музыка"} path={"/pvndpl-front/musics"}/>
-                <MenuItem icon={<SettingsIcon/>} text={"Настройки"} path={"/pvndpl-front/settings"}/>
             </ul>
         </nav>
     );

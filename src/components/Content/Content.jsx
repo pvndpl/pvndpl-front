@@ -20,7 +20,6 @@ const Content = () => {
                 <Route path="posts" element={<Posts/>} />
                 <Route path="friends" element={<Friend/>} />
                 <Route path="groups" element={<Group/>} />
-                <Route path="photos" element={<Photos/>} />
             </Routes>
         </div>
     );
