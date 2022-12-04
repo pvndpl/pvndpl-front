@@ -5,10 +5,9 @@ import Friends from './Friends';
 
 describe('<Friends />', () => {
   test('it should mount', () => {
-    render(<Friends />);
-    
-    const friends = screen.getByTestId('Friends');
+    const element = render(<Friends />);
 
-    expect(friends).toBeInTheDocument();
+    expect(element).toMatchSnapshot();
+
   });
 });

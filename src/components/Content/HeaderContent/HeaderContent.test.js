@@ -3,12 +3,11 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import HeaderContent from './HeaderContent';
 
-describe('<HeaderContent />', () => {
+describe('<Navbar />', () => {
   test('it should mount', () => {
-    render(<HeaderContent />);
-    
-    const headerContent = screen.getByTestId('HeaderContent');
+    const element = render(<HeaderContent />);
 
-    expect(headerContent).toBeInTheDocument();
+    expect(element).toMatchSnapshot();
+
   });
 });

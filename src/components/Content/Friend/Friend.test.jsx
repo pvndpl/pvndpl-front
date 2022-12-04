@@ -1,14 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import Menu from './Menu';
+import Friend from './Friend';
 
-describe('<Menu />', () => {
+describe('<Navbar />', () => {
   test('it should mount', () => {
-    render(<Menu />);
-    
-    const menu = screen.getByTestId('Menu');
+    const element = render(<Friend />);
 
-    expect(menu).toBeInTheDocument();
+    expect(element).toMatchSnapshot();
+
   });
 });

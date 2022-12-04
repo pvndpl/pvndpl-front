@@ -5,10 +5,9 @@ import Photos from './Photos';
 
 describe('<Photos />', () => {
   test('it should mount', () => {
-    render(<Photos />);
-    
-    const photos = screen.getByTestId('Photos');
+    const element = render(<Photos />);
 
-    expect(photos).toBeInTheDocument();
+    expect(element).toMatchSnapshot();
+
   });
 });

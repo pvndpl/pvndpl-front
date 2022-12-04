@@ -1,14 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import Group from './Group';
+import Information from './Information';
 
-describe('<Group />', () => {
+describe('<Information />', () => {
   test('it should mount', () => {
-    render(<Group />);
-    
-    const group = screen.getByTestId('Group');
+    const element = render(<Information />);
 
-    expect(group).toBeInTheDocument();
+    expect(element).toMatchSnapshot();
+
   });
 });

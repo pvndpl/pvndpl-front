@@ -5,10 +5,9 @@ import HeaderContent from './HeaderContent';
 
 describe('<HeaderContent />', () => {
   test('it should mount', () => {
-    render(<HeaderContent />);
-    
-    const headerContent = screen.getByTestId('HeaderContent');
+    const element = render(<HeaderContent />);
 
-    expect(headerContent).toBeInTheDocument();
+    expect(element).toMatchSnapshot();
+
   });
 });

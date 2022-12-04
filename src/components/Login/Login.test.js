@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import Posts from './Posts';
+import Login from './Login';
 
-describe('<Posts />', () => {
+describe('<Login />', () => {
   test('it should mount', () => {
-    const element = render(<Posts />);
+    const element = render(<Login />);
 
     expect(element).toMatchSnapshot();
 

@@ -5,10 +5,9 @@ import Musics from './Musics';
 
 describe('<Musics />', () => {
   test('it should mount', () => {
-    render(<Musics />);
-    
-    const musics = screen.getByTestId('Musics');
+    const element = render(<Musics />);
 
-    expect(musics).toBeInTheDocument();
+    expect(element).toMatchSnapshot();
+
   });
 });

@@ -1,13 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import Posts from './Posts';
+import About from './About';
 
-describe('<Posts />', () => {
+describe('<Navbar />', () => {
   test('it should mount', () => {
-    const element = render(<Posts />);
+    const about = render(<About />);
 
-    expect(element).toMatchSnapshot();
+    expect(about).toMatchSnapshot();
 
   });
 });
