@@ -10,6 +10,7 @@ import NewsFeed from "../../components/NewsFeed/NewsFeed";
 import Friends from "../../components/Friends/Friends";
 import Groups from "../../components/Groups/Groups";
 import Login from "../../components/Login/Login"
+import Register from "../../components/Register/Register"
 
 const Desktop = (props) => {
     console.log( props)
@@ -26,6 +27,7 @@ const Desktop = (props) => {
                         <Route path="friends" element={<Friends/>}/>
                         <Route path="groups" element={<Groups/>}/>
                         <Route path="login" element={<Login/>}/>
+                        <Route path="register" element={<Register/>}/>
                     </Route>
                     <Route path="*" element={<NotFoundPage/>}/>
                 </Routes>
