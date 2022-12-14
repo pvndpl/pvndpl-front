@@ -1,6 +1,28 @@
 import style from "./Login.module.css";
 import './form.css'
+import axios from '../../redux/axios';
+import React from "react";
+
 const Login = () => {
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const formElement = document.getElementById('loginForm')
+        const formData = new FormData(formElement);
+
+        const username = formData.get("username")
+        const password = formData.get("password")
+
+        await axios.post(
+            '/authenticate',
+            JSON.stringify({"username": username, "password": password}),
+            {
+                headers: {"Content-Type": "application/json"}
+            }
+        ).then((response) => document.cookie = "JWT=".concat(response.data.token)).catch(console.log)
+    }
+
     return (
         <div className={style.vkloginHeader}>
 
@@ -11,13 +33,13 @@ const Login = () => {
                 <div className="container">
                     <div className="screen">
                         <div className="screen__content">
-                        <h1>Заходи</h1>
-                            <form className="login">
+                            <h1>Заходи</h1>
+                            <form id="loginForm" className="login" onSubmit={handleSubmit}>
                                 <div className="login__field">
-                                    <input type="text" className="login__input" placeholder="User name" />
+                                    <input type="text" name="username" className="login__input" placeholder="User name" />
                                 </div>
                                 <div className="login__field">
-                                    <input type="password" className="login__input" placeholder="Пароль" />
+                                    <input type="password" name="password" className="login__input" placeholder="Пароль"/>
                                 </div>
                                 <button className="button login__submit">
                                     <span className="button__text">Зайти</span>
