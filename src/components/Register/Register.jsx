@@ -1,6 +1,30 @@
 import style from "./Register.module.css";
 import './form.css'
+import axios from "../../redux/axios";
+import React from "react";
+
 const Register = () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const formElement = document.getElementById('registerForm')
+        const formData = new FormData(formElement);
+
+        const username = formData.get("username")
+        const password = formData.get("password")
+        const email = formData.get("email")
+        const firstName = formData.get("firstName")
+        const secondName = formData.get("secondName")
+        const token = document.cookie
+
+        await axios.post(
+            '/users',
+            JSON.stringify({"username": username, "password": password, "email": email, "firstName": firstName, "secondName": secondName}),
+            {
+                headers: {"Content-Type": "application/json"}
+            }
+        ).then(console.log).catch(console.log)
+    }
     return (
         <div className={style.vkloginHeader}>
 
@@ -12,21 +36,21 @@ const Register = () => {
                     <div className="screen">
                         <div className="screen__content">
                         <h1>Заходи</h1>
-                            <form className="login">
+                            <form id="registerForm" className="login" onSubmit={handleSubmit}>
                                 <div className="login__field">
-                                    <input type="text" className="login__input" placeholder="User name" />
+                                    <input type="text" name="username" className="login__input" placeholder="User name" />
                                 </div>
                                 <div className="login__field">
-                                    <input type="password" className="login__input" placeholder="Пароль" />
+                                    <input type="password" name="password" className="login__input" placeholder="Пароль" />
                                 </div>
                                 <div className="login__field">
-                                    <input  className="login__input" placeholder="email" />
+                                    <input name="email" className="login__input" placeholder="email" />
                                 </div>
                                 <div className="login__field">
-                                    <input  className="login__input" placeholder="имя" />
+                                    <input  name="firstName" className="login__input" placeholder="имя" />
                                 </div>
                                 <div className="login__field">
-                                    <input  className="login__input" placeholder="фамилия" />
+                                    <input  name="secondName" className="login__input" placeholder="фамилия" />
                                 </div>
                                 
                                 <button className="button login__submit">
