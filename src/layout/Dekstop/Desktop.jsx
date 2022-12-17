@@ -17,7 +17,6 @@ import React, { useState, useEffect } from 'react';
 import axios from '../../redux/axios';
 
 const Desktop = (props) => {
-    console.log( props)
     const [username, setUsername] = useState();
     
     useEffect(() => {

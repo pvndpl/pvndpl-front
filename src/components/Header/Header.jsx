@@ -18,7 +18,6 @@ const Header = ({ updateActive }) => {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }
         ).then(response => {
-            console.log(response.data.username)
             setUsername(response.data.username)
             setToken(Cookies.get('JWT'))
         });

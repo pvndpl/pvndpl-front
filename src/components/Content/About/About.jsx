@@ -71,7 +71,6 @@ const About = (props) => {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }
         ).then(response => {
-            console.log(response)
             setUsername(response)
         });
     }

@@ -10,7 +10,6 @@ import {
 import {NavLink} from "react-router-dom";
 
 const Navigation = (path) => {
-    console.log(path.path)
         return (
             <div className={style.navigation}>
                 <NavLink className={({isActive}) => isActive ? style.activeLink : style.navigationIcon} to={`${path.path}about`}>

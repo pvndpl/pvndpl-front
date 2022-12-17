@@ -22,7 +22,6 @@ export default function ConversationList(props) {
          }
      ).then(response => {
         let newConversations = response.data.map(result => {
-          console.log(result)
           return {
               photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Macaca_nigra_self-portrait_large.jpg/220px-Macaca_nigra_self-portrait_large.jpg",
               name: `${result.userFirstName} ${result.userLastName}`,
