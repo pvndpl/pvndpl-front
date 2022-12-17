@@ -94,11 +94,11 @@ const UserInfo = (props) => {
                         </div>
                         <div className={style.statsBlock}>
                             <p className={style.statsTitle}>{username.data.subscribersCount}</p>
-                            <p className={style.statsText}>Друзья</p>
+                            <p className={style.statsText}>Пописки</p>
                         </div>
-                        <div>
-                            <p className={style.statsTitle}>{username.data.commentsCount}</p>
-                            <p className={style.statsText}>Комментарии</p>
+                        <div className={style.statsBlock}>
+                            <p className={style.statsTitle}>{username.data.subscriptionsCount}</p>
+                            <p className={style.statsText}>Подписчики</p>
                         </div>
                     </div>
                     <div className={style.headerInfo}>

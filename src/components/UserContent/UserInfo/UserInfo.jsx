@@ -41,10 +41,7 @@ const UserInfo = (props) => {
 
     const getConversations = (e) => {
         axios.get(
-            '/profile',
-            {
-                headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
-            }
+            '/users/491456cf-0d81-414e-a1f1-f021ca7822d0',
         ).then(response => {
             console.log(response)
             setUsername(response)
@@ -96,9 +93,9 @@ const UserInfo = (props) => {
                             <p className={style.statsTitle}>{username.data.subscribersCount}</p>
                             <p className={style.statsText}>Друзья</p>
                         </div>
-                        <div>
-                            <p className={style.statsTitle}>{username.data.commentsCount}</p>
-                            <p className={style.statsText}>Комментарии</p>
+                        <div className={style.statsBlock}>
+                            <p className={style.statsTitle}>{username.data.subscriptionsCount}</p>
+                            <p className={style.statsText}>Подписчики</p>
                         </div>
                     </div>
                     <div className={style.headerInfo}>

@@ -29,7 +29,6 @@ const Header = ({ updateActive }) => {
         Cookies.remove('JWT', { path: '' });
     }
     if (token) {
-        console.log(username)
         return (
             <header className={style.header}>
                 <div className={style.headerInformation}>
@@ -48,7 +47,6 @@ const Header = ({ updateActive }) => {
             </header>
         );
     } else {
-        console.log(username)
         return (
             <header className={style.header}>
                 <div className={style.headerInformation}>

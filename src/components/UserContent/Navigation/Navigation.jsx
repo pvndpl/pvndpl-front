@@ -9,19 +9,20 @@ import {
 } from "@vkontakte/icons";
 import {NavLink} from "react-router-dom";
 
-const Navigation = () => {
+const Navigation = (path) => {
+    console.log(path.path)
         return (
             <div className={style.navigation}>
-                <NavLink className={({isActive}) => isActive ? style.activeLink : style.navigationIcon} to="/pvndpl-front/content/about">
+                <NavLink className={({isActive}) => isActive ? style.activeLink : style.navigationIcon} to={`${path.path}about`}>
                     <Icon36UserCircleOutline/>
                 </NavLink>
-                <NavLink className={({isActive}) => isActive ? style.activeLink : style.navigationIcon} to="/pvndpl-front/content/posts">
+                <NavLink className={({isActive}) => isActive ? style.activeLink : style.navigationIcon} to={`${path.path}posts`}>
                     <Icon36TearOffFlyerOutline/>
                 </NavLink>
-                <NavLink className={({isActive}) => isActive ? style.activeLink : style.navigationIcon} to="/pvndpl-front/content/friends">
+                <NavLink className={({isActive}) => isActive ? style.activeLink : style.navigationIcon} to={`${path.path}friends`}>
                     <Icon36Users/>
                 </NavLink>
-                <NavLink className={({isActive}) => isActive ? style.activeLink : style.navigationIcon} to="/pvndpl-front/content/groups">
+                <NavLink className={({isActive}) => isActive ? style.activeLink : style.navigationIcon} to={`${path.path}groups`}>
                     <Icon36Users3Outline/>
                 </NavLink>
             </div>

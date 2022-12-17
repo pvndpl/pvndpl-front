@@ -115,6 +115,26 @@ const About = (props) => {
             }
         ).then(console.log).catch(console.log)
     }
+    const handleSubmit2 = async (e) => {
+
+        const formElement = document.getElementById('Form2')
+        const formData = new FormData(formElement);
+
+        const email = formData.get("email")
+        const birthdate = formData.get("birthdate")
+        const busyness = formData.get("busyness")
+        const nativeCity = formData.get("nativeCity")
+
+        await axios.patch(
+            '/profile/personalInf',
+            JSON.stringify({"email": email, "birthdate": birthdate, "busyness": busyness, "nativeCity": nativeCity}),
+            {
+                headers: {"Content-Type": "application/json",
+                    Authorization: "Bearer ".concat(Cookies.get('JWT'))
+                }
+            }
+        ).then(console.log).catch(console.log)
+    }
     if (!!username) {
         return (
             <div className={style.main}>
@@ -219,18 +239,18 @@ const About = (props) => {
                     </div>
                     <div className={style.informationLine}>
                         <p className={style.informationTitle}>День рождение</p>
-                        <p className={style.informationText}> {username.data.email}</p>
+                        <p className={style.informationText}> {username.data.birthdate}</p>
                     </div>
                     <div className={style.informationLine}>
                         <p className={style.informationTitle}>Занятость</p>
-                        <p className={style.informationText}> Web Developer</p>
+                        <p className={style.informationText}> {username.data.busyness}</p>
                     </div>
                     <div className={style.informationLine}>
                         <p className={style.informationTitle}>Родной город</p>
-                        <p className={style.informationText}> Волжский, Россия</p>
+                        <p className={style.informationText}>{username.data.nativeCity}</p>
                     </div>
                     <div>
-                    <button onClick={openModal2}>Open Modal</button>
+                    <button onClick={openModal2}>Изменить данные</button>
                     <Modal
                         isOpen={modalIsOpen2}
                         onAfterOpen={afterOpenModal2}
@@ -238,15 +258,24 @@ const About = (props) => {
                         style={customStyles}
                         contentLabel="Example Modal"
                     >
-                        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-                        <button onClick={closeModal2}>close</button>
-                        <div>I am a modal</div>
-                        <form>
-                            <input />
-                            <button>tab navigation</button>
-                            <button>stays</button>
-                            <button>inside</button>
-                            <button>the modal</button>
+                        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Изменить</h2>
+                        <button onClick={closeModal2}>Закрыть</button>
+                        <form id="Form2" className="login" onSubmit={handleSubmit2}>
+                            <div className="login__field">
+                                <input type="text" name="email" className="login__input" placeholder="Email" />
+                            </div>
+                            <div className="login__field">
+                                <input name="birthdate" className="login__input" placeholder="День Рождения" />
+                            </div>
+                            <div className="login__field">
+                                <input  name="busyness" className="login__input" placeholder="Занятость" />
+                            </div>
+                            <div className="login__field">
+                                <input  name="nativeCity" className="login__input" placeholder="Родной город" />
+                            </div>
+                            <button className="button login__submit">
+                                <span className="button__text">Пажилое подтверждение</span>
+                            </button>
                         </form>
                     </Modal>
                 </div>

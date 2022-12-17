@@ -25,7 +25,7 @@ const Login = () => {
                 headers: {"Content-Type": "application/json"}
             }
         ).then((response) => document.cookie = "JWT=".concat(response.data.token)).catch(console.log)
-        navigate("/pvndpl-front/content");
+        window.location.href = 'http://localhost:3000/pvndpl-front/content';
     }
 
     return (

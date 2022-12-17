@@ -27,7 +27,7 @@ const Register = () => {
                 headers: {"Content-Type": "application/json"}
             }
         ).then(console.log).catch(console.log)
-        navigate("/pvndpl-front/content");
+        window.location.href = 'http://localhost:3000/pvndpl-front/content';
     }
     return (
         <div className={style.vkloginHeader}>
