@@ -22,36 +22,24 @@ const UserInfo = (props) => {
 
     const user = (e) => {
         axios.get(
-            '/user-info',
+            `/user-info/${props.path}`,
             {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }
         ).then(response => {
-            console.log(response.data)
             setUsername1(response)
-            /*           let newConversations = response.data.map(result => {
-                        console.log(result)
-                        return {
-                            name: `${result.userFirstName} ${result.userLastName}`,
-                        };
-                      });
-                      setConversations([...conversations, ...newConversations]) */
+
         });
     }
 
     const getConversations = (e) => {
         axios.get(
-            '/users/491456cf-0d81-414e-a1f1-f021ca7822d0',
+            `/users/${props.path}`,
+            {
+                headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
+            }
         ).then(response => {
-            console.log(response)
             setUsername(response)
-            /*           let newConversations = response.data.map(result => {
-                        console.log(result)
-                        return {
-                            name: `${result.userFirstName} ${result.userLastName}`,
-                        };
-                      });
-                      setConversations([...conversations, ...newConversations]) */
         });
     }
     if (isPhone) {

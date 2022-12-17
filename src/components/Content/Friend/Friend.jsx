@@ -47,15 +47,8 @@ const Friend = () => {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }
         ).then(response => {
-            console.log(response.data)
             setUsername1(response)
-            /*           let newConversations = response.data.map(result => {
-                        console.log(result)
-                        return {
-                            name: `${result.userFirstName} ${result.userLastName}`,
-                        };
-                      });
-                      setConversations([...conversations, ...newConversations]) */
+
         });
     }
 
@@ -66,15 +59,8 @@ const Friend = () => {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }
         ).then(response => {
-            console.log(response)
             setUsername(response)
-            /*           let newConversations = response.data.map(result => {
-                        console.log(result)
-                        return {
-                            name: `${result.userFirstName} ${result.userLastName}`,
-                        };
-                      });
-                      setConversations([...conversations, ...newConversations]) */
+
         });
     }
 
@@ -85,8 +71,8 @@ const Friend = () => {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }
         ).then(response => {
+            console.log('хуйэ', response)
             let newConversations = response.data.map(result => {
-                console.log(result)
                 return {
                     name: `${result.firstName} ${result.secondName}`,
                     id: result.id,
@@ -99,7 +85,6 @@ const Friend = () => {
     if (Array.isArray(conversations) && !!username1 && !!username) {
         const name1 = `${username1.data.firstname} ${username1.data.lastname}`;
         const count = username.data.subscribersCount;
-        console.log(count)
         return (<div className={styles.Friend} data-testid="Friend">
             <HeaderContent name={name1} section={"Друзья"} count={count} />
             {

@@ -27,15 +27,7 @@ const UserInfo = (props) => {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }
         ).then(response => {
-            console.log(response.data)
             setUsername1(response)
-            /*           let newConversations = response.data.map(result => {
-                        console.log(result)
-                        return {
-                            name: `${result.userFirstName} ${result.userLastName}`,
-                        };
-                      });
-                      setConversations([...conversations, ...newConversations]) */
         });
     }
 
@@ -46,15 +38,8 @@ const UserInfo = (props) => {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }
         ).then(response => {
-            console.log(response)
             setUsername(response)
-            /*           let newConversations = response.data.map(result => {
-                        console.log(result)
-                        return {
-                            name: `${result.userFirstName} ${result.userLastName}`,
-                        };
-                      });
-                      setConversations([...conversations, ...newConversations]) */
+
         });
     }
     if (isPhone) {

@@ -63,7 +63,6 @@ let store = {
         return this._state;
     },
     _callSubscriber() {
-        console.log("ChangeState");
     },
     dispatch(action) {
 

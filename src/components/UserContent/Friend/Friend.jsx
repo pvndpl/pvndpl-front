@@ -8,27 +8,27 @@ import SportsBarIcon from '@mui/icons-material/SportsBar';
 import axios from '../../../redux/axios';
 import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Aboba = (props) => {
     const { username, name, id } = props.data;
     return (
-        <NavLink to={`/pvndpl-front/users/${id}`}>
+        <a href={`http://localhost:3000/pvndpl-front/users/${id}`}>
             <div className={styles.users}>
                 <div className={styles.user}>
                     <div className={styles.preview}>
                         <img className={styles.headerInfoImg}
-                            src={"https://damion.club/uploads/posts/2022-01/thumbs/1642968512_17-damion-club-p-tupaya-obezyana-19.jpg"} />
+                            src={"https://sciencequizing.com/wp-content/uploads/2020/03/ccelebritiesfoto0_Portrait-of-a-monkey.jpg"} />
                         <p className={styles.name}>{name}</p>
                         <p className={styles.tag}>@{username}</p>
                     </div>
                 </div>
             </div>
-        </NavLink>
+        </a>
     )
 }
 
-const Friend = () => {
+const Friend = (props) => {
     const [conversations, setConversations] = useState([]);
 
     useEffect(() => {
@@ -42,20 +42,12 @@ const Friend = () => {
 
     const user = (e) => {
         axios.get(
-            '/user-info',
+            `/user-info/${props.path}`,
             {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }
         ).then(response => {
-            console.log(response.data)
             setUsername1(response)
-            /*           let newConversations = response.data.map(result => {
-                        console.log(result)
-                        return {
-                            name: `${result.userFirstName} ${result.userLastName}`,
-                        };
-                      });
-                      setConversations([...conversations, ...newConversations]) */
         });
     }
 
@@ -66,27 +58,18 @@ const Friend = () => {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }
         ).then(response => {
-            console.log(response)
             setUsername(response)
-            /*           let newConversations = response.data.map(result => {
-                        console.log(result)
-                        return {
-                            name: `${result.userFirstName} ${result.userLastName}`,
-                        };
-                      });
-                      setConversations([...conversations, ...newConversations]) */
         });
     }
 
     const getConversations1 = () => {
         axios.get(
-            '/subscribers',
+            `/subscribers/${props.path}`,
             {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }
         ).then(response => {
             let newConversations = response.data.map(result => {
-                console.log(result)
                 return {
                     name: `${result.firstName} ${result.secondName}`,
                     id: result.id,
@@ -98,8 +81,7 @@ const Friend = () => {
     }
     if (Array.isArray(conversations) && !!username1 && !!username) {
         const name1 = `${username1.data.firstname} ${username1.data.lastname}`;
-        const count = username.data.subscribersCount;
-        console.log(count)
+        const count = username1.data.subscribersCount;
         return (<div className={styles.Friend} data-testid="Friend">
             <HeaderContent name={name1} section={"Друзья"} count={count} />
             {

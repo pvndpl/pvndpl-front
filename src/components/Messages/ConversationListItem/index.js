@@ -9,17 +9,6 @@ export default function ConversationListItem(props) {
     shave('.conversation-snippet', 20);
   })
 
-    // const showDialog = async (e) => {
-    //     e.preventDefault();
-    //
-    //     await axios.post(
-    //         '/authenticate',
-    //         JSON.stringify({"username": username, "password": password}),
-    //         {
-    //             headers: {"Content-Type": "application/json"}
-    //         }
-    //     ).then((response) => document.cookie = "JWT=".concat(response.data.token)).catch(console.log)
-    // }
 
     const { photo, name, chatId, userId } = props.data;
 
