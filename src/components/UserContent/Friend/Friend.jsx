@@ -83,11 +83,10 @@ const Friend = (props) => {
         const name1 = `${username1.data.firstname} ${username1.data.lastname}`;
         const count = username1.data.subscribersCount;
         return (<div className={styles.Friend} data-testid="Friend">
-            <HeaderContent name={name1} section={"Друзья"} count={count} />
+            <HeaderContent name={name1} section={"Подписки"} count={count} />
             {
                 conversations.map(conversation =>
                     <Aboba
-                        key={conversation.name}
                         data={conversation}
                     />
                 )
