@@ -42,12 +42,26 @@ const UserInfo = (props) => {
             setUsername(response)
         });
     }
+
+    const handle = () => {
+        console.log(Cookies.get('JWT'))
+        axios.post(
+            '/subscribers',
+            {
+                params: { subscriberId: props.path },
+                headers: {Authorization: "Bearer ".concat(Cookies.get('JWT'))}
+            }
+        ).then(response => {
+    
+        });
+    }
+
     if (isPhone) {
         return (
             <div className={style.userInfo}>
                 <div className={style.headerInfo}>
                     <img className={style.headerInfoImg}
-                        src={"https://sun9-49.userapi.com/impg/vKedzYpG0W2WPdlt6lwvtRN8lMYyo1WY58k_JA/PKHIhlUcXcA.jpg?size=1215x2160&quality=95&sign=c48dc9952636b2cde75cc3ae82e7fc9b&type=album"} />
+                        src={"https://www.anepedia.org/img/4/4099510/i2/%D0%A4%D0%BE%D1%82%D0%BE_%D0%BF%D1%80%D0%B8%D0%BA%D0%BE%D0%BB_%D0%BF%D1%80%D0%BE_%D0%BE%D0%B1%D0%B5%D0%B7%D1%8C%D1%8F%D0%BD.jpg"} />
                     <p className={style.name}>{props}</p>
                     <p>@Belython</p>
 
@@ -78,23 +92,23 @@ const UserInfo = (props) => {
                             <p className={style.statsText}>Посты</p>
                         </div>
                         <div className={style.statsBlock}>
-                            <p className={style.statsTitle}>{username.data.subscribersCount}</p>
-                            <p className={style.statsText}>Друзья</p>
+                            <p className={style.statsTitle}>{username.data.subscriptionsCount}</p>
+                            <p className={style.statsText}>Подписки</p>
                         </div>
                         <div className={style.statsBlock}>
-                            <p className={style.statsTitle}>{username.data.subscriptionsCount}</p>
+                            <p className={style.statsTitle}>{username.data.subscribersCount}</p>
                             <p className={style.statsText}>Подписчики</p>
                         </div>
                     </div>
                     <div className={style.headerInfo}>
                         <img className={style.headerInfoImg}
-                            src={"https://pic.rutubelist.ru/video/25/e7/25e78d1f435b1bc032c2d2a518a7beee.jpg"} />
+                            src={"https://www.anepedia.org/img/4/4099510/i2/%D0%A4%D0%BE%D1%82%D0%BE_%D0%BF%D1%80%D0%B8%D0%BA%D0%BE%D0%BB_%D0%BF%D1%80%D0%BE_%D0%BE%D0%B1%D0%B5%D0%B7%D1%8C%D1%8F%D0%BD.jpg"} />
                         <p className={style.name}>{username1.data.firstname} {username1.data.lastname}</p>
                         <p>@{username1.data.username}</p>
 
                     </div>
                     <div className={style.socialNetworks}>
-                        <button className={style.add_button}>Подписаться</button>
+                        <button onClick={handle} className={style.add_button}>Подписаться</button>
                     </div>
                 </div>
             );
