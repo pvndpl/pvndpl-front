@@ -21,23 +21,12 @@ const Header = ({ updateActive }) => {
             console.log(response.data.username)
             setUsername(response.data.username)
             setToken(Cookies.get('JWT'))
-            /*           let newConversations = response.data.map(result => {
-                        console.log(result)
-                        return {
-                            name: `${result.userFirstName} ${result.userLastName}`,
-                        };
-                      });
-                      setConversations([...conversations, ...newConversations]) */
         });
     }
+
     getConversations()
-    const activateLasers = (e) =>{
-        e.preventDefault();
-        const path = '/';
-        var cookies = Cookies.get();
-        for (var cookie in cookies) {
-          Cookies.remove(cookie, { path: path });
-        }
+    const activateLasers = () =>{
+        Cookies.remove('JWT', { path: '' });
     }
     if (token) {
         console.log(username)
@@ -52,7 +41,7 @@ const Header = ({ updateActive }) => {
                 <div className={style.headerInformation}>
                     <div className={style.headerBrand}>                <h1 className={style.headerBrandText}>Привет, {username}</h1></div>
                     <form>
-                        <button onclick={activateLasers} className={style.headerBrandText}>Выход</button>
+                        <button onClick={activateLasers} className={style.headerBrandText}>Выход</button>
                     </form>
 
                 </div>
