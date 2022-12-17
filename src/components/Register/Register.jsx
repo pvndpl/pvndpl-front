@@ -2,8 +2,11 @@ import style from "./Register.module.css";
 import './form.css'
 import axios from "../../redux/axios";
 import React from "react";
+import {Link} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -24,6 +27,7 @@ const Register = () => {
                 headers: {"Content-Type": "application/json"}
             }
         ).then(console.log).catch(console.log)
+        navigate("/pvndpl-front/content");
     }
     return (
         <div className={style.vkloginHeader}>
@@ -52,10 +56,11 @@ const Register = () => {
                                 <div className="login__field">
                                     <input  name="secondName" className="login__input" placeholder="фамилия" />
                                 </div>
-                                
+{/*                                 <Link className={style.headerBrand} to={"/pvndpl-front/content"}> */}
                                 <button className="button login__submit">
                                     <span className="button__text">Пажилая Регистрация</span>
                                 </button>
+{/*                                 </Link> */}
                             </form>
                         </div>
                         <div className="screen__background">

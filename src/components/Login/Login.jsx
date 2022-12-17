@@ -2,8 +2,12 @@ import style from "./Login.module.css";
 import './form.css'
 import axios from '../../redux/axios';
 import React from "react";
+import {Link} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -21,6 +25,7 @@ const Login = () => {
                 headers: {"Content-Type": "application/json"}
             }
         ).then((response) => document.cookie = "JWT=".concat(response.data.token)).catch(console.log)
+        navigate("/pvndpl-front/content");
     }
 
     return (
@@ -41,9 +46,11 @@ const Login = () => {
                                 <div className="login__field">
                                     <input type="password" name="password" className="login__input" placeholder="Пароль"/>
                                 </div>
+{/*                                 <Link className={style.headerBrand} to={"/pvndpl-front/content"}> */}
                                 <button className="button login__submit">
                                     <span className="button__text">Зайти</span>
                                 </button>
+{/*                                 </Link> */}
                             </form>
                         </div>
                         <div className="screen__background">
