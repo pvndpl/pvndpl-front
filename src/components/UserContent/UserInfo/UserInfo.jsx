@@ -44,16 +44,12 @@ const UserInfo = (props) => {
     }
 
     const handle = () => {
-        console.log(Cookies.get('JWT'))
         axios.post(
-            '/subscribers',
+            `/subscribers/${props.path}`, {},
             {
-                params: { subscriberId: props.path },
-                headers: {Authorization: "Bearer ".concat(Cookies.get('JWT'))}
+                headers: {Authorization: "Bearer ".concat(Cookies.get('JWT'))},
             }
-        ).then(response => {
-    
-        });
+        ).then(console.log).catch(console.log);
     }
 
     if (isPhone) {
@@ -92,12 +88,12 @@ const UserInfo = (props) => {
                             <p className={style.statsText}>Посты</p>
                         </div>
                         <div className={style.statsBlock}>
-                            <p className={style.statsTitle}>{username.data.subscriptionsCount}</p>
-                            <p className={style.statsText}>Подписки</p>
-                        </div>
-                        <div className={style.statsBlock}>
                             <p className={style.statsTitle}>{username.data.subscribersCount}</p>
                             <p className={style.statsText}>Подписчики</p>
+                        </div>
+                        <div className={style.statsBlock}>
+                            <p className={style.statsTitle}>{username.data.subscriptionsCount}</p>
+                            <p className={style.statsText}>Подписки</p>
                         </div>
                     </div>
                     <div className={style.headerInfo}>

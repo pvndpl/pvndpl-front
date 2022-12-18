@@ -9,10 +9,10 @@ export default function Compose(props) {
           className="compose-input"
           placeholder="Type a message, @name"
         />
-
         {
           props.rightItems
         }
+        <button className="add_button">Отправить</button>
       </div>
     );
 }

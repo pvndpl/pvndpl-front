@@ -66,12 +66,11 @@ const Friend = () => {
 
     const getConversations1 = () => {
         axios.get(
-            '/subscribers',
+            '/subscriptions',
             {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }
         ).then(response => {
-            console.log('хуйэ', response)
             let newConversations = response.data.map(result => {
                 return {
                     name: `${result.firstName} ${result.secondName}`,
@@ -84,7 +83,7 @@ const Friend = () => {
     }
     if (Array.isArray(conversations) && !!username1 && !!username) {
         const name1 = `${username1.data.firstname} ${username1.data.lastname}`;
-        const count = username.data.subscribersCount;
+        const count = username.data.subscriptionsCount;
         return (<div className={styles.Friend} data-testid="Friend">
             <HeaderContent name={name1} section={"Подписки"} count={count} />
             {

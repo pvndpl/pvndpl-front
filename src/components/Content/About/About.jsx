@@ -1,19 +1,19 @@
 import style from "./About.module.css";
 import axios from '../../../redux/axios';
 import Cookies from 'js-cookie';
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import Modal from 'react-modal';
 
 const customStyles = {
     content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
     },
-  };
+};
 
 const About = (props) => {
     const [username, setUsername] = useState();
@@ -35,6 +35,7 @@ const About = (props) => {
     function closeModal() {
         setIsOpen(false);
     }
+
     function openModal1() {
         setIsOpen1(true);
     }
@@ -47,6 +48,7 @@ const About = (props) => {
     function closeModal1() {
         setIsOpen1(false);
     }
+
     function openModal2() {
         setIsOpen2(true);
     }
@@ -68,7 +70,7 @@ const About = (props) => {
         axios.get(
             '/profile',
             {
-                headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
+                headers: {Authorization: "Bearer ".concat(Cookies.get('JWT'))}
             }
         ).then(response => {
             setUsername(response)
@@ -87,30 +89,32 @@ const About = (props) => {
             '/profile/about',
             JSON.stringify({"about": about, "city": city, "website": website}),
             {
-                headers: {"Content-Type": "application/json",
-                Authorization: "Bearer ".concat(Cookies.get('JWT')) 
-            }
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer ".concat(Cookies.get('JWT'))
+                }
             }
         ).then(console.log).catch(console.log)
     }
 
     const handleSubmit1 = async (e) => {
-
         const formElement = document.getElementById('Form1')
         const formData = new FormData(formElement);
 
         const tvShows = formData.get("tvShows")
         const showmen = formData.get("showmen")
+        const movies = formData.get('movies')
         const books = formData.get("books")
         const games = formData.get("games")
 
         await axios.patch(
             '/profile/interests',
-            JSON.stringify({"tvShows": tvShows, "showmen": showmen, "books": books, "games": games}),
+            JSON.stringify({"tvShows": tvShows, "showmen": showmen, "movies": movies, "books": books, "games": games}),
             {
-                headers: {"Content-Type": "application/json",
-                Authorization: "Bearer ".concat(Cookies.get('JWT')) 
-            }
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer ".concat(Cookies.get('JWT'))
+                }
             }
         ).then(console.log).catch(console.log)
     }
@@ -128,7 +132,8 @@ const About = (props) => {
             '/profile/personalInf',
             JSON.stringify({"email": email, "birthdate": birthdate, "busyness": busyness, "nativeCity": nativeCity}),
             {
-                headers: {"Content-Type": "application/json",
+                headers: {
+                    "Content-Type": "application/json",
                     Authorization: "Bearer ".concat(Cookies.get('JWT'))
                 }
             }
@@ -151,35 +156,37 @@ const About = (props) => {
                     <div className={style.informationLine}>
                         <p className={style.informationTitle}>Сайт</p>
                         <a className={style.informationText}
-                            href={username.data.website}>  {username.data.website}</a>
+                           href={username.data.website}>  {username.data.website}</a>
                     </div>
                     <div>
-                    <button onClick={openModal}>Пажилое редактирование</button>
-                    <Modal
-                        isOpen={modalIsOpen}
-                        onAfterOpen={afterOpenModal}
-                        onRequestClose={closeModal}
-                        style={customStyles}
-                        contentLabel="Example Modal"
-                    >
-                        <h2>Изменить данные</h2>
-                        <button onClick={closeModal}>Закрыть</button>
-                        <form id="Form" className="login" onSubmit={handleSubmit}>
+                        <button onClick={openModal}>Пажилое редактирование</button>
+                        <Modal
+                            isOpen={modalIsOpen}
+                            onAfterOpen={afterOpenModal}
+                            onRequestClose={closeModal}
+                            style={customStyles}
+                            contentLabel="Example Modal">
+                            <h2>Изменить данные</h2>
+                            <button onClick={closeModal}>Закрыть</button>
+                            <form id="Form" className="login" onSubmit={handleSubmit}>
                                 <div className="login__field">
-                                    <input type="text" name="tvShows" className="login__input" placeholder="Обо мне" />
+                                    <input type="text" name="about" className="login__input" placeholder="Обо мне"
+                                           defaultValue={username.data.about}/>
                                 </div>
                                 <div className="login__field">
-                                    <input name="city" className="login__input" placeholder="Город" />
+                                    <input name="city" className="login__input" placeholder="Город"
+                                           defaultValue={username.data.city}/>
                                 </div>
                                 <div className="login__field">
-                                    <input  name="website" className="login__input" placeholder="Сайт" />
+                                    <input name="website" className="login__input" placeholder="Сайт"
+                                           defaultValue={username.data.website}/>
                                 </div>
                                 <button className="button login__submit">
                                     <span className="button__text">Пажилое подтверждение</span>
                                 </button>
                             </form>
-                    </Modal>
-                </div>
+                        </Modal>
+                    </div>
                 </div>
                 <div className={style.widgetBox}>
                     <p className={style.mainTitle}>Интересы</p>
@@ -192,6 +199,10 @@ const About = (props) => {
                         <p className={style.informationText}> {username.data.showmen}</p>
                     </div>
                     <div>
+                        <p className={style.interestsTitle}>Любимые фильмы</p>
+                        <p className={style.informationText}>{username.data.movies}</p>
+                    </div>
+                    <div>
                         <p className={style.interestsTitle}>Любимые книги</p>
                         <p className={style.informationText}>{username.data.books}</p>
                     </div>
@@ -200,35 +211,43 @@ const About = (props) => {
                         <p className={style.informationText}> {username.data.games}</p>
                     </div>
                     <div>
-                    <button onClick={openModal1}>Пажилое редактирование</button>
-                    <Modal
-                        isOpen={modalIsOpen1}
-                        onAfterOpen={afterOpenModal1}
-                        onRequestClose={closeModal1}
-                        style={customStyles}
-                        contentLabel="Example Modal"
-                    >
-                       <h2>Изменить данные</h2>
-                        <button onClick={closeModal}>Закрыть</button>
-                        <form id="Form1" className="login" onSubmit={handleSubmit1}>
+                        <button onClick={openModal1}>Пажилое редактирование</button>
+                        <Modal
+                            isOpen={modalIsOpen1}
+                            onAfterOpen={afterOpenModal1}
+                            onRequestClose={closeModal1}
+                            style={customStyles}
+                            contentLabel="Example Modal">
+                            <h2>Изменить данные</h2>
+                            <button onClick={closeModal1}>Закрыть</button>
+                            <form id="Form1" className="login" onSubmit={handleSubmit1}>
                                 <div className="login__field">
-                                    <input type="text" name="tvShows" className="login__input" placeholder="Любимые ТВ шоу" />
+                                    <input type="text" name="tvShows" className="login__input"
+                                           placeholder="Любимые ТВ шоу" defaultValue={username.data.tvShows}/>
                                 </div>
                                 <div className="login__field">
-                                    <input name="showmen" className="login__input" placeholder="Любимые Исполнители / Артисты" />
+                                    <input name="showmen" className="login__input"
+                                           placeholder="Любимые Исполнители / Артисты"
+                                           defaultValue={username.data.showmen}/>
+                                </div>
+                                <div>
+                                    <input name="movies" className="login__input" placeholder="Любимые фильмы"
+                                           defaultValue={username.data.movies}/>
                                 </div>
                                 <div className="login__field">
-                                    <input  name="books" className="login__input" placeholder="Любимые книги" />
+                                    <input name="books" className="login__input" placeholder="Любимые книги"
+                                           defaultValue={username.data.books}/>
                                 </div>
                                 <div className="login__field">
-                                    <input  name="games" className="login__input" placeholder="Любимые игры" />
+                                    <input name="games" className="login__input" placeholder="Любимые игры"
+                                           defaultValue={username.data.games}/>
                                 </div>
                                 <button className="button login__submit">
                                     <span className="button__text">Пажилое подтверждение</span>
                                 </button>
                             </form>
-                    </Modal> 
-                </div>
+                        </Modal>
+                    </div>
                 </div>
                 <div className={style.widgetBox}>
                     <p className={style.mainTitle}>Персональная информация</p>
@@ -249,35 +268,38 @@ const About = (props) => {
                         <p className={style.informationText}>{username.data.nativeCity}</p>
                     </div>
                     <div>
-                    <button onClick={openModal2}>Изменить данные</button>
-                    <Modal
-                        isOpen={modalIsOpen2}
-                        onAfterOpen={afterOpenModal2}
-                        onRequestClose={closeModal2}
-                        style={customStyles}
-                        contentLabel="Example Modal"
-                    >
-                        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Изменить</h2>
-                        <button onClick={closeModal2}>Закрыть</button>
-                        <form id="Form2" className="login" onSubmit={handleSubmit2}>
-                            <div className="login__field">
-                                <input type="text" name="email" className="login__input" placeholder="Email" />
-                            </div>
-                            <div className="login__field">
-                                <input name="birthdate" className="login__input" placeholder="День Рождения" />
-                            </div>
-                            <div className="login__field">
-                                <input  name="busyness" className="login__input" placeholder="Занятость" />
-                            </div>
-                            <div className="login__field">
-                                <input  name="nativeCity" className="login__input" placeholder="Родной город" />
-                            </div>
-                            <button className="button login__submit">
-                                <span className="button__text">Пажилое подтверждение</span>
-                            </button>
-                        </form>
-                    </Modal>
-                </div>
+                        <button onClick={openModal2}>Изменить данные</button>
+                        <Modal
+                            isOpen={modalIsOpen2}
+                            onAfterOpen={afterOpenModal2}
+                            onRequestClose={closeModal2}
+                            style={customStyles}
+                            contentLabel="Example Modal">
+                            <h2>Изменить данные</h2>
+                            <button onClick={closeModal2}>Закрыть</button>
+                            <form id="Form2" className="login" onSubmit={handleSubmit2}>
+                                <div className="login__field">
+                                    <input type="text" name="email" className="login__input" placeholder="Email"
+                                           defaultValue={username.data.email}/>
+                                </div>
+                                <div className="login__field">
+                                    <input type="date" name="birthdate" className="login__input"
+                                           placeholder="День Рождения" defaultValue={username.data.birthdate}/>
+                                </div>
+                                <div className="login__field">
+                                    <input name="busyness" className="login__input" placeholder="Занятость"
+                                           defaultValue={username.data.busyness}/>
+                                </div>
+                                <div className="login__field">
+                                    <input name="nativeCity" className="login__input" placeholder="Родной город"
+                                           defaultValue={username.data.nativeCity}/>
+                                </div>
+                                <button className="button login__submit">
+                                    <span className="button__text">Пажилое подтверждение</span>
+                                </button>
+                            </form>
+                        </Modal>
+                    </div>
                 </div>
             </div>
         );

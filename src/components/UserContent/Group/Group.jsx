@@ -59,7 +59,7 @@ const Group = (props) => {
 
     const getConversations1 = () => {
         axios.get(
-            `/subscriptions/${props.path}`,
+            `/subscribers/${props.path}`,
             {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }

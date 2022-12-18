@@ -2,62 +2,9 @@ import style from "./About.module.css";
 import axios from '../../../redux/axios';
 import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
-import Modal from 'react-modal';
-
-const customStyles = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-    },
-};
 
 const About = (props) => {
     const [username, setUsername] = useState();
-    let subtitle;
-    const [modalIsOpen, setIsOpen] = React.useState(false);
-    const [modalIsOpen1, setIsOpen1] = React.useState(false);
-    const [modalIsOpen2, setIsOpen2] = React.useState(false);
-
-    function openModal() {
-        setIsOpen(true);
-    }
-
-    function afterOpenModal() {
-        // references are now sync'd and can be accessed.
-        subtitle.style.color = '#f00';
-    }
-
-    function closeModal() {
-        setIsOpen(false);
-    }
-    function openModal1() {
-        setIsOpen1(true);
-    }
-
-    function afterOpenModal1() {
-        // references are now sync'd and can be accessed.
-        subtitle.style.color = '#f00';
-    }
-
-    function closeModal1() {
-        setIsOpen1(false);
-    }
-    function openModal2() {
-        setIsOpen2(true);
-    }
-
-    function afterOpenModal2() {
-        // references are now sync'd and can be accessed.
-        subtitle.style.color = '#f00';
-    }
-
-    function closeModal2() {
-        setIsOpen2(false);
-    }
 
     useEffect(() => {
         getConversations()

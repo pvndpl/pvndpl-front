@@ -64,7 +64,7 @@ const Friend = (props) => {
 
     const getConversations1 = () => {
         axios.get(
-            `/subscribers/${props.path}`,
+            `/subscriptions/${props.path}`,
             {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }
@@ -81,7 +81,7 @@ const Friend = (props) => {
     }
     if (Array.isArray(conversations) && !!username1 && !!username) {
         const name1 = `${username1.data.firstname} ${username1.data.lastname}`;
-        const count = username1.data.subscribersCount;
+        const count = username1.data.subscriptionsCount;
         return (<div className={styles.Friend} data-testid="Friend">
             <HeaderContent name={name1} section={"Подписки"} count={count} />
             {
