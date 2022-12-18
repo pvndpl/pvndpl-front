@@ -5,7 +5,7 @@ import Toolbar from '../Toolbar';
 import ToolbarButton from '../ToolbarButton';
 import axios from '../../../redux/axios';
 import Cookies from 'js-cookie';
-
+import {NavLink} from "react-router-dom";
 import './ConversationList.css';
 
 export default function ConversationList(props) {
@@ -47,10 +47,12 @@ export default function ConversationList(props) {
         <ConversationSearch />
         {
           conversations.map(conversation =>
+            <a href={`http://localhost:3000/pvndpl-front/messages/${conversation.chatId}`}>
             <ConversationListItem
               key={conversation.name}
               data={conversation}
             />
+                    </a>
           )
         }
       </div>
