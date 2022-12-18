@@ -44,16 +44,12 @@ const UserInfo = (props) => {
     }
 
     const handle = () => {
-        console.log(Cookies.get('JWT'))
         axios.post(
-            '/subscribers',
+            `/subscribers/${props.path}`, {},
             {
-                params: { subscriberId: props.path },
-                headers: {Authorization: "Bearer ".concat(Cookies.get('JWT'))}
+                headers: {Authorization: "Bearer ".concat(Cookies.get('JWT'))},
             }
-        ).then(response => {
-    
-        });
+        ).then(console.log).catch(console.log);
     }
 
     if (isPhone) {

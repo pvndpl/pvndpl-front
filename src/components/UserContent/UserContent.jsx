@@ -30,7 +30,6 @@ const UserContent = () => {
                 <Route path="about" element={<About path={query[5]}/>} />
                 <Route path="posts" element={<Posts/>} />
                 <Route path="friends" element={<Friend path={query[5]}/>} />
-                <Route path="groups" element={<Group path={query[5]}/>} />
                 <Route path="groups" element={<Group/>} />
             </Routes>
         </div>

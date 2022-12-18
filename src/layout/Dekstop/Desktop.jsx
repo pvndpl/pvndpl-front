@@ -4,7 +4,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Content from "../../components/Content/Content";
 import UserContent from "../../components/UserContent/UserContent";
 import Footer from "../../components/Footer/Footer";
-import {Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Messages from "../../components/Messages/Messages";
 import NotFoundPage from "../../components/NotFoundPage/NotFoundPage";
 import NewsFeed from "../../components/NewsFeed/NewsFeed";

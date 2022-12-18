@@ -71,7 +71,6 @@ const Friend = () => {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }
         ).then(response => {
-            console.log('хуйэ', response)
             let newConversations = response.data.map(result => {
                 return {
                     name: `${result.firstName} ${result.secondName}`,
