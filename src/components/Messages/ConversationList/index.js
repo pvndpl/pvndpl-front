@@ -49,7 +49,7 @@ export default function ConversationList(props) {
 
     const getSubscribers = () => {
         axios.get(
-            '/subscribers',
+            '/subscriptions',
             {
                 headers: {Authorization: "Bearer ".concat(Cookies.get('JWT'))}
             }
@@ -110,9 +110,9 @@ export default function ConversationList(props) {
             let newConversations = response.data.map(result => {
                 return {
                     photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Macaca_nigra_self-portrait_large.jpg/220px-Macaca_nigra_self-portrait_large.jpg",
-                    name: `${result.userFirstName} ${result.userLastName}`,
                     chatId: result.chatId,
-                    userId: result.userId
+                    userId: result.userId,
+                    name: `${result.userFirstName} ${result.userLastName}`,
                 };
             });
             setConversations([...conversations, ...newConversations])

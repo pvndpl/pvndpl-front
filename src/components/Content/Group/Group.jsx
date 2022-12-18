@@ -61,7 +61,7 @@ const Group = () => {    const [conversations, setConversations] = useState([]);
 
     const getConversations1 = () => {
         axios.get(
-            `/subscriptions`,
+            `/subscribers`,
             {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }
