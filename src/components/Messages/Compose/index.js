@@ -1,18 +1,14 @@
 import React from 'react';
 import './Compose.css';
+import axios from "../../../redux/axios";
+import Cookies from "js-cookie";
 
 export default function Compose(props) {
     return (
       <div className="compose">
-        <input
-          type="text"
-          className="compose-input"
-          placeholder="Type a message, @name"
-        />
         {
           props.rightItems
         }
-        <button className="add_button">Отправить</button>
       </div>
     );
 }

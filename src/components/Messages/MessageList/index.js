@@ -21,9 +21,6 @@ export default function MessageList(props) {
   const path = `/` + `${query[3]}` + `/` + `${query[4]}` + `/` + `${query[5]}` + '/'
 
 
-  
-
-
   const getMessages = () => {
 
 
@@ -61,6 +58,22 @@ export default function MessageList(props) {
 console.log(id)
 
 const MY_USER_ID = id;
+
+  const sendMessage = () => {
+    const formElement = document.getElementById('message')
+    const formData = new FormData(formElement);
+
+    const text = formData.get("message_text")
+    console.log(formElement.valueOf())
+
+    axios.post(
+        `/chats/${query[5]}`,
+        JSON.stringify({"text": text}),
+        {
+          headers: {Authorization: "Bearer ".concat(Cookies.get('JWT')), "Content-Type": "application/json"}
+        }
+    ).then(console.log) ;
+  }
 
 const renderMessages = () => {
   let i = 0;
@@ -140,7 +153,16 @@ return (
       <ToolbarButton key="audio" icon="ion-ios-mic" />,
       <ToolbarButton key="money" icon="ion-ios-card" />,
       <ToolbarButton key="games" icon="ion-logo-game-controller-b" />,
-      <ToolbarButton key="emoji" icon="ion-ios-happy" />
+      <ToolbarButton key="emoji" icon="ion-ios-happy" />,
+      <form id="message" className="compose-input">
+      <input
+          name="message_text"
+          type="text"
+          className="compose-input"
+          placeholder="Type a message, @name"
+      />
+        </form> ,
+      <button className="add_button" onClick={sendMessage}>Отправить</button>
     ]} />
   </div>
 );
