@@ -10,19 +10,7 @@ import './ConversationList.css';
 import style from "../../UserContent/UserInfo/UserInfo.module.css";
 import styles from "../../Content/Friend/Friend.module.css";
 
-const SubscriberList = (props) => {
-    const {id, username, firstName, secondName} = props.data;
-    return (
-        <div className={styles.user}>
-            <div className={styles.preview}>
-                <img className={styles.headerInfoImg}
-                     src={"https://vsememy.ru/wp-content/cache/thumb/62e36a6a5_320x200.jpg"}/>
-                <p className={styles.name}>{firstName}</p>
-                <p className={styles.tag}>@{secondName}</p>
-            </div>
-        </div> //todo добавить кнопку создания чата
-    )
-}
+
 export default function ConversationList(props) {
     const [isModal, setModal] = React.useState(false);
     const [conversations, setConversations] = useState([]);
@@ -31,6 +19,34 @@ export default function ConversationList(props) {
         getConversations()
         getSubscribers()
     }, [])
+
+    const SubscriberList = (props) => {
+        const {id, username, firstName, secondName} = props.data;
+        console.log(props.data)
+        const CreateChat = () => {
+            const {id, username, firstName, secondName} = props.data;
+            axios.post(
+                '/chats',
+                JSON.stringify({"type": "Private", "title": firstName + secondName, "userInvitedID": id}),
+                {headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer ".concat(Cookies.get('JWT'))
+                    }
+                })
+        }
+    return (
+            <div className={styles.user}>
+                <div className={styles.preview}>
+                    <img className={styles.headerInfoImg}
+                         src={"https://vsememy.ru/wp-content/cache/thumb/62e36a6a5_320x200.jpg"}/>
+                    <p className={styles.name}>{firstName}</p>
+                    <p className={styles.tag}>{secondName}</p>
+                    <button className={style.add_button} onClick={CreateChat}> Создать чат</button>
+                </div>
+            </div>
+        )
+    }
+
     const getSubscribers = () => {
         axios.get(
             '/subscribers',
@@ -115,9 +131,8 @@ export default function ConversationList(props) {
                     <ToolbarButton key="add" icon="ion-ios-add-circle-outline"/>
                 ]}
             />
-            <button onClick={() => setModal(true)} className={style.add_button}>Подписаться</button>
+            <button onClick={() => setModal(true)} className={style.add_button}>Добавить чат</button>
             <Modal
-
                 isVisible={isModal}
                 title="Список подписок"
                 content={list}
