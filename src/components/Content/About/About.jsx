@@ -170,7 +170,8 @@ const About = (props) => {
                 params: {title: tag}
 
             }
-        ).then()
+        ).then(         window.location.reload())
+
     }
 
     if (!!username) {
@@ -355,7 +356,7 @@ const About = (props) => {
                             </button>
                         </form>
                     </Modal>
-                    <p>На данный момент используейте теги: </p>
+                    <p>На данный момент используейте теги: TV Music Movies Books Games Girls Beer Football Porn</p>
                 </div>
             </div>
         );
