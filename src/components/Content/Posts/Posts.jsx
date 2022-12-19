@@ -1,11 +1,11 @@
-
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import PropTypes from 'prop-types';
 import './Posts.css';
 import './founation.css'
+import axios from '../../../redux/axios';
+import Cookies from 'js-cookie';
 
-
-const categories = ['World', 'Business', 'Tech', 'Sport'];
+const categories = ['TV', 'Music', 'Movies', 'Books', 'Games', 'Girls', 'Beer', 'Football', 'Porn'];
 
 class Posts extends Component {
     render() {
@@ -20,13 +20,23 @@ class Posts extends Component {
 class Feed extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            posts: JSON.parse(localStorage.getItem('posts')) || [],
-            filteredPosts: []
-        }
-
-        this.handleNewPost = this.handleNewPost.bind(this);
-        this.handleFilter = this.handleFilter.bind(this);
+        axios.get(
+            '/profile/posts',
+            {
+                headers: {Authorization: "Bearer ".concat(Cookies.get('JWT'))}
+            }
+        ).then(response => {
+            response.data.map(el => {
+                const post = {content: el.content, category: el.category}
+                this.state = {
+                    posts: post || [],
+                    filteredPosts: []
+                }
+            })
+            console.log(this.state.posts)
+            this.handleNewPost = this.handleNewPost.bind(this);
+            this.handleFilter = this.handleFilter.bind(this);
+        });
     }
 
     handleNewPost(post) {
