@@ -18,7 +18,7 @@ const Aboba = (props) => {
                 <div className={styles.user}>
                     <div className={styles.preview}>
                         <img className={styles.headerInfoImg}
-                            src={"https://damion.club/uploads/posts/2022-01/thumbs/1642968512_17-damion-club-p-tupaya-obezyana-19.jpg"} />
+                             src={"https://damion.club/uploads/posts/2022-01/thumbs/1642968512_17-damion-club-p-tupaya-obezyana-19.jpg"} />
                         <p className={styles.name}>{name}</p>
                         <p className={styles.tag}>@{username}</p>
                     </div>
@@ -29,15 +29,40 @@ const Aboba = (props) => {
 }
 
 const Friends = () => {
-
     const [conversations, setConversations] = useState([]);
 
     useEffect(() => {
+        getConversations()
         getConversations1()
+        user()
     }, [])
 
     const [username1, setUsername1] = useState();
     const [username, setUsername] = useState();
+
+    const user = (e) => {
+        axios.get(
+            '/user-info',
+            {
+                headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
+            }
+        ).then(response => {
+            setUsername1(response)
+
+        });
+    }
+
+    const getConversations = (e) => {
+        axios.get(
+            '/profile',
+            {
+                headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
+            }
+        ).then(response => {
+            setUsername(response)
+
+        });
+    }
 
     const getConversations1 = () => {
         axios.get(
@@ -60,11 +85,10 @@ const Friends = () => {
         const name1 = `${username1.data.firstname} ${username1.data.lastname}`;
         const count = username.data.subscribersCount;
         return (<div className={styles.Friend} data-testid="Friend">
-            <HeaderContent name={name1} section={"Друзья"} count={count} />
+            <HeaderContent name={name1} section={"Подписки"} count={count} />
             {
                 conversations.map(conversation =>
                     <Aboba
-                        key={conversation.name}
                         data={conversation}
                     />
                 )
@@ -73,4 +97,9 @@ const Friends = () => {
     }
 }
 
-    export default Friends;
+
+Friends.propTypes = {};
+
+Friends.defaultProps = {};
+
+export default Friends;
