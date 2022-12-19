@@ -22,7 +22,6 @@ export default function ConversationList(props) {
 
     const SubscriberList = (props) => {
         const {id, username, firstName, secondName} = props.data;
-        console.log(props.data)
         const CreateChat = () => {
             const {id, username, firstName, secondName} = props.data;
             axios.post(
@@ -32,7 +31,7 @@ export default function ConversationList(props) {
                         "Content-Type": "application/json",
                         Authorization: "Bearer ".concat(Cookies.get('JWT'))
                     }
-                })
+                }).then(() => window.location.reload())
         }
     return (
             <div className={styles.user}>

@@ -31,7 +31,6 @@ export default function MessageList(props) {
       }
     ).then(response => {
       setID(response.data.id)
-      console.log(response.id)
     });
 
 
@@ -42,7 +41,6 @@ export default function MessageList(props) {
       }
     ).then(response => {
       let tempMessages = response.data.map(result => {
-        console.log(result)
         return {
           id: result.id,
           author: result.userIdFrom,
@@ -55,8 +53,6 @@ export default function MessageList(props) {
 
 }
 
-console.log(id)
-
 const MY_USER_ID = id;
 
   const sendMessage = () => {
@@ -64,7 +60,6 @@ const MY_USER_ID = id;
     const formData = new FormData(formElement);
 
     const text = formData.get("message_text")
-    console.log(formElement.valueOf())
 
     axios.post(
         `/chats/${query[5]}`,
@@ -72,7 +67,7 @@ const MY_USER_ID = id;
         {
           headers: {Authorization: "Bearer ".concat(Cookies.get('JWT')), "Content-Type": "application/json"}
         }
-    ).then(console.log) ;
+    ).then(() => window.location.reload());
   }
 
 const renderMessages = () => {

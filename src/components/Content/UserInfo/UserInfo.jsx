@@ -79,11 +79,11 @@ const UserInfo = (props) => {
                         </div>
                         <div className={style.statsBlock}>
                             <p className={style.statsTitle}>{username.data.subscribersCount}</p>
-                            <p className={style.statsText}>Подписчики</p>
+                            <p className={style.statsText}>Подписки</p>
                         </div>
                         <div className={style.statsBlock}>
                             <p className={style.statsTitle}>{username.data.subscriptionsCount}</p>
-                            <p className={style.statsText}>Подписки</p>
+                            <p className={style.statsText}>Подписчики</p>
                         </div>
                     </div>
                     <div className={style.headerInfo}>
@@ -91,7 +91,6 @@ const UserInfo = (props) => {
                             src={"https://pic.rutubelist.ru/video/25/e7/25e78d1f435b1bc032c2d2a518a7beee.jpg"} />
                         <p className={style.name}>{username1.data.firstname} {username1.data.lastname}</p>
                         <p>@{username1.data.username}</p>
-
                     </div>
                     <div className={style.socialNetworks}>
 

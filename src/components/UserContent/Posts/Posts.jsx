@@ -55,7 +55,6 @@ class Feed extends Component {
             <div className="feed">
                 <Filter onFilter={this.handleFilter} />
                 {filteredPosts.length > 0 ? filteredPosts : posts}
-                <PostForm onSubmit={this.handleNewPost} />
             </div>
         )
     }

@@ -61,7 +61,7 @@ const Group = () => {    const [conversations, setConversations] = useState([]);
 
     const getConversations1 = () => {
         axios.get(
-            `/subscribers`,
+            `/subscriptions`,
             {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }
@@ -78,9 +78,9 @@ const Group = () => {    const [conversations, setConversations] = useState([]);
     }
     if (Array.isArray(conversations) && !!username1 && !!username) {
         const name1 = `${username1.data.firstname} ${username1.data.lastname}`;
-        const count = username1.data.subscribersCount;
+        const count = username.data.subscriptionsCount;
         return (<div className={styles.Friend} data-testid="Friend">
-            <HeaderContent name={name1} section={"Подписчики"} count={count} />
+            <HeaderContent name={name1} section={"Падпищики"} count={count} />
             {
                 conversations.map(conversation =>
                     <Aboba

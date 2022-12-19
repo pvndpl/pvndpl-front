@@ -24,8 +24,10 @@ const Login = () => {
             {
                 headers: {"Content-Type": "application/json"}
             }
-        ).then((response) => document.cookie = "JWT=".concat(response.data.token)).catch(console.log)
-        window.location.href = 'http://localhost:3000/pvndpl-front/content';
+        ).then((response) => {
+            document.cookie = 'JWT='.concat(response.data.token).concat('; expires=').concat(new Date() + 86400000)
+            window.location.href = 'http://localhost:3000/pvndpl-front/';
+    })
     }
 
     return (

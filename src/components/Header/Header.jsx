@@ -11,7 +11,7 @@ const Header = ({ updateActive }) => {
     const [token, setToken] = useState();
 
 
-    const getConversations = (e) => {
+    const getConversations = () => {
         axios.get(
             '/user-info',
             {
@@ -23,8 +23,13 @@ const Header = ({ updateActive }) => {
         });
     }
 
+    const sleep = (milliseconds) => {
+        return new Promise(resolve => setTimeout(resolve, milliseconds))
+    }
+
     getConversations()
-    const activateLasers = () => {
+    const activateLasers = (e) => {
+        e.preventDefault();
         var cookies = document.cookie.split(";");
         for (var i = 0; i < cookies.length; i++) {
             var cookie = cookies[i];
@@ -33,6 +38,10 @@ const Header = ({ updateActive }) => {
             document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;";
             document.cookie = name + '=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         }
+        Cookies.remove('JWT')
+        sleep(300).then(() => {
+            window.location.href = 'http://localhost:3000/pvndpl-front/';
+        })
     }
 
     if (token) {

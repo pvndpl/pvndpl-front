@@ -6,29 +6,40 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from '../../../redux/axios';
 import Cookies from 'js-cookie';
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 
 const UserInfo = (props) => {
 
     const isPhone = useMediaQuery('(max-width:605px)');
     const [username, setUsername] = useState();
     const [username1, setUsername1] = useState();
+    const [check, setCheck] = useState();
 
 
     useEffect(() => {
         getConversations()
         user()
+        checkSub()
     }, [])
 
     const user = (e) => {
         axios.get(
-            `/user-info/${props.path}`,
+            `/user-info`,
             {
-                headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
+                headers: {Authorization: "Bearer ".concat(Cookies.get('JWT'))}
             }
-        ).then(response => {
-            setUsername1(response)
-
+        ).then((response) => {
+            if (response.data.id === props.path) {
+                window.location.href = 'http://localhost:3000/pvndpl-front/content'
+            }
+            axios.get(
+                `/user-info/${props.path}`,
+                {
+                    headers: {Authorization: "Bearer ".concat(Cookies.get('JWT'))}
+                }
+            ).then(response => {
+                setUsername1(response)
+            });
         });
     }
 
@@ -36,10 +47,21 @@ const UserInfo = (props) => {
         axios.get(
             `/users/${props.path}`,
             {
-                headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
+                headers: {Authorization: "Bearer ".concat(Cookies.get('JWT'))}
             }
         ).then(response => {
             setUsername(response)
+        });
+    }
+
+    const checkSub = () => {
+        axios.get(
+            `/subscriptions-check/${props.path}`,
+            {
+                headers: {Authorization: "Bearer ".concat(Cookies.get('JWT'))}
+            }
+        ).then(response => {
+            setCheck(response.data)
         });
     }
 
@@ -49,7 +71,17 @@ const UserInfo = (props) => {
             {
                 headers: {Authorization: "Bearer ".concat(Cookies.get('JWT'))},
             }
-        ).then(console.log).catch(console.log);
+        ).then(() => window.location.reload()).catch(console.log);
+    }
+
+    const handleUnsubscribe = () => {
+        axios.delete(
+            `/subscribers`,
+            {
+                headers: {Authorization: "Bearer ".concat(Cookies.get('JWT'))},
+                params: {subscriberId: props.path}
+            }
+        ).then(() => window.location.reload()).catch(console.log);
     }
 
     if (isPhone) {
@@ -57,7 +89,7 @@ const UserInfo = (props) => {
             <div className={style.userInfo}>
                 <div className={style.headerInfo}>
                     <img className={style.headerInfoImg}
-                        src={"https://www.anepedia.org/img/4/4099510/i2/%D0%A4%D0%BE%D1%82%D0%BE_%D0%BF%D1%80%D0%B8%D0%BA%D0%BE%D0%BB_%D0%BF%D1%80%D0%BE_%D0%BE%D0%B1%D0%B5%D0%B7%D1%8C%D1%8F%D0%BD.jpg"} />
+                         src={"https://www.anepedia.org/img/4/4099510/i2/%D0%A4%D0%BE%D1%82%D0%BE_%D0%BF%D1%80%D0%B8%D0%BA%D0%BE%D0%BB_%D0%BF%D1%80%D0%BE_%D0%BE%D0%B1%D0%B5%D0%B7%D1%8C%D1%8F%D0%BD.jpg"}/>
                     <p className={style.name}>{props}</p>
                     <p>@Belython</p>
 
@@ -78,37 +110,62 @@ const UserInfo = (props) => {
                 </div>
             </div>
         );
-    } else if (!!username && !!username1) {
-        {
-            return (
-                <div className={style.userInfo}>
-                    <div className={style.stats}>
-                        <div className={style.statsBlock}>
-                            <p className={style.statsTitle}>{username.data.postsCount}</p>
-                            <p className={style.statsText}>Посты</p>
-                        </div>
-                        <div className={style.statsBlock}>
-                            <p className={style.statsTitle}>{username.data.subscribersCount}</p>
-                            <p className={style.statsText}>Подписчики</p>
-                        </div>
-                        <div className={style.statsBlock}>
-                            <p className={style.statsTitle}>{username.data.subscriptionsCount}</p>
-                            <p className={style.statsText}>Подписки</p>
-                        </div>
+    } else if (!!username && !!username1 && !check) {
+        return (
+            <div className={style.userInfo}>
+                <div className={style.stats}>
+                    <div className={style.statsBlock}>
+                        <p className={style.statsTitle}>{username.data.postsCount}</p>
+                        <p className={style.statsText}>Посты</p>
                     </div>
-                    <div className={style.headerInfo}>
-                        <img className={style.headerInfoImg}
-                            src={"https://www.anepedia.org/img/4/4099510/i2/%D0%A4%D0%BE%D1%82%D0%BE_%D0%BF%D1%80%D0%B8%D0%BA%D0%BE%D0%BB_%D0%BF%D1%80%D0%BE_%D0%BE%D0%B1%D0%B5%D0%B7%D1%8C%D1%8F%D0%BD.jpg"} />
-                        <p className={style.name}>{username1.data.firstname} {username1.data.lastname}</p>
-                        <p>@{username1.data.username}</p>
-
+                    <div className={style.statsBlock}>
+                        <p className={style.statsTitle}>{username.data.subscribersCount}</p>
+                        <p className={style.statsText}>Подписки</p>
                     </div>
-                    <div className={style.socialNetworks}>
-                        <button onClick={handle} className={style.add_button}>Подписаться</button>
+                    <div className={style.statsBlock}>
+                        <p className={style.statsTitle}>{username.data.subscriptionsCount}</p>
+                        <p className={style.statsText}>Подписчики</p>
                     </div>
                 </div>
-            );
-        }
+                <div className={style.headerInfo}>
+                    <img className={style.headerInfoImg}
+                         src={"https://www.anepedia.org/img/4/4099510/i2/%D0%A4%D0%BE%D1%82%D0%BE_%D0%BF%D1%80%D0%B8%D0%BA%D0%BE%D0%BB_%D0%BF%D1%80%D0%BE_%D0%BE%D0%B1%D0%B5%D0%B7%D1%8C%D1%8F%D0%BD.jpg"}/>
+                    <p className={style.name}>{username1.data.firstname} {username1.data.lastname}</p>
+                    <p>@{username1.data.username}</p>
+                </div>
+                <div className={style.socialNetworks}>
+                    <button onClick={handle} className={style.add_button}>Подписаться</button>
+                </div>
+            </div>
+        );
+    } else if (!!username && !!username1 && check) {
+        return (
+            <div className={style.userInfo}>
+                <div className={style.stats}>
+                    <div className={style.statsBlock}>
+                        <p className={style.statsTitle}>{username.data.postsCount}</p>
+                        <p className={style.statsText}>Посты</p>
+                    </div>
+                    <div className={style.statsBlock}>
+                        <p className={style.statsTitle}>{username.data.subscribersCount}</p>
+                        <p className={style.statsText}>Подписки</p>
+                    </div>
+                    <div className={style.statsBlock}>
+                        <p className={style.statsTitle}>{username.data.subscriptionsCount}</p>
+                        <p className={style.statsText}>Подписчики</p>
+                    </div>
+                </div>
+                <div className={style.headerInfo}>
+                    <img className={style.headerInfoImg}
+                         src={"https://www.anepedia.org/img/4/4099510/i2/%D0%A4%D0%BE%D1%82%D0%BE_%D0%BF%D1%80%D0%B8%D0%BA%D0%BE%D0%BB_%D0%BF%D1%80%D0%BE_%D0%BE%D0%B1%D0%B5%D0%B7%D1%8C%D1%8F%D0%BD.jpg"}/>
+                    <p className={style.name}>{username1.data.firstname} {username1.data.lastname}</p>
+                    <p>@{username1.data.username}</p>
+                </div>
+                <div className={style.socialNetworks}>
+                    <button onClick={handleUnsubscribe} className={style.add_unSubButton}>Отписаться</button>
+                </div>
+            </div>
+        );
     }
 }
 

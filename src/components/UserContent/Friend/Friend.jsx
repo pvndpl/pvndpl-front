@@ -8,7 +8,6 @@ import SportsBarIcon from '@mui/icons-material/SportsBar';
 import axios from '../../../redux/axios';
 import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
 
 const Aboba = (props) => {
     const { username, name, id } = props.data;
@@ -53,7 +52,7 @@ const Friend = (props) => {
 
     const getConversations = (e) => {
         axios.get(
-            '/profile',
+            `/users/${props.path}`,
             {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }
@@ -64,7 +63,7 @@ const Friend = (props) => {
 
     const getConversations1 = () => {
         axios.get(
-            `/subscriptions/${props.path}`,
+            `/subscribers/${props.path}`,
             {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }
@@ -81,7 +80,7 @@ const Friend = (props) => {
     }
     if (Array.isArray(conversations) && !!username1 && !!username) {
         const name1 = `${username1.data.firstname} ${username1.data.lastname}`;
-        const count = username1.data.subscriptionsCount;
+        const count = username.data.subscribersCount;
         return (<div className={styles.Friend} data-testid="Friend">
             <HeaderContent name={name1} section={"Подписки"} count={count} />
             {

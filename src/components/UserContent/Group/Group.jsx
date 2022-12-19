@@ -1,11 +1,10 @@
 import axios from '../../../redux/axios';
 import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
 import styles from './Group.module.css';
 import HeaderContent from "../HeaderContent/HeaderContent";
 
-const Aboba = (props) => {
+const Aboba2 = (props) => {
     const { username, name, id } = props.data;
     return (
         <a href={`http://localhost:3000/pvndpl-front/users/${id}`}>
@@ -48,7 +47,7 @@ const Group = (props) => {
 
     const getConversations = (e) => {
         axios.get(
-            '/profile',
+            `/users/${props.path}`,
             {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }
@@ -59,7 +58,7 @@ const Group = (props) => {
 
     const getConversations1 = () => {
         axios.get(
-            `/subscribers/${props.path}`,
+            `/subscriptions/${props.path}`,
             {
                 headers: { Authorization: "Bearer ".concat(Cookies.get('JWT')) }
             }
@@ -76,12 +75,12 @@ const Group = (props) => {
     }
     if (Array.isArray(conversations) && !!username1 && !!username) {
         const name1 = `${username1.data.firstname} ${username1.data.lastname}`;
-        const count = username1.data.subscribersCount;
+        const count = username.data.subscriptionsCount;
         return (<div className={styles.Friend} data-testid="Friend">
-            <HeaderContent name={name1} section={"Подписчики"} count={count} />
+            <HeaderContent name={name1} section={"Падпищики"} count={count} />
             {
                 conversations.map(conversation =>
-                    <Aboba
+                    <Aboba2
                         data={conversation}
                     />
                 )
