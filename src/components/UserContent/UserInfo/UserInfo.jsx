@@ -8,12 +8,20 @@ import axios from '../../../redux/axios';
 import Cookies from 'js-cookie';
 import React, {useState, useEffect} from 'react';
 
+const Tag = (props) => {
+    const {title} = props.data
+    return (
+        <a href={`http://localhost:3000/pvndpl-front/tag/${title}`}>{title}</a>
+    )
+}
+
 const UserInfo = (props) => {
 
     const isPhone = useMediaQuery('(max-width:605px)');
     const [username, setUsername] = useState();
     const [username1, setUsername1] = useState();
     const [check, setCheck] = useState();
+    const [tags, setTags] = useState([]);
 
 
     useEffect(() => {
@@ -41,6 +49,21 @@ const UserInfo = (props) => {
                 setUsername1(response)
             });
         });
+        if (true) {
+            axios.get(
+                `/users/${props.path}/tags`,
+                {
+                    headers: {Authorization: "Bearer ".concat(Cookies.get('JWT'))}
+                }
+            ).then(response => {
+                let tagList = response.data.map(result => {
+                    return {
+                        title: result.title
+                    };
+                });
+                setTags([...tags, ...tagList])
+            });
+        }
     }
 
     const getConversations = (e) => {
@@ -83,6 +106,8 @@ const UserInfo = (props) => {
             }
         ).then(() => window.location.reload()).catch(console.log);
     }
+    const list = tags.map((el) =>
+        <Tag data={el}/>)
 
     if (isPhone) {
         return (
@@ -160,6 +185,8 @@ const UserInfo = (props) => {
                          src={"https://www.anepedia.org/img/4/4099510/i2/%D0%A4%D0%BE%D1%82%D0%BE_%D0%BF%D1%80%D0%B8%D0%BA%D0%BE%D0%BB_%D0%BF%D1%80%D0%BE_%D0%BE%D0%B1%D0%B5%D0%B7%D1%8C%D1%8F%D0%BD.jpg"}/>
                     <p className={style.name}>{username1.data.firstname} {username1.data.lastname}</p>
                     <p>@{username1.data.username}</p>
+                    {tags.map((el) =>
+                        <Tag data={el}/>)}
                 </div>
                 <div className={style.socialNetworks}>
                     <button onClick={handleUnsubscribe} className={style.add_unSubButton}>Отписаться</button>

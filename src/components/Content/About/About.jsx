@@ -22,6 +22,8 @@ const About = (props) => {
     const [modalIsOpen, setIsOpen] = React.useState(false);
     const [modalIsOpen1, setIsOpen1] = React.useState(false);
     const [modalIsOpen2, setIsOpen2] = React.useState(false);
+    const [modalIsOpen3, setIsOpen3] = React.useState(false);
+
 
     function openModal() {
         setIsOpen(true);
@@ -60,6 +62,19 @@ const About = (props) => {
 
     function closeModal2() {
         setIsOpen2(false);
+    }
+
+    function openModal3() {
+        setIsOpen3(true);
+    }
+
+    function afterOpenModal3() {
+        // references are now sync'd and can be accessed.
+        subtitle.style.color = '#f00';
+    }
+
+    function closeModal3() {
+        setIsOpen3(false);
     }
 
     useEffect(() => {
@@ -139,6 +154,25 @@ const About = (props) => {
             }
         ).then(console.log).catch(console.log)
     }
+    const handleSubmit3 = async (e) => {
+        e.preventDefault();
+
+        const formElement = document.getElementById('Form3')
+        const formData = new FormData(formElement);
+
+        const tag = formData.get("tag")
+
+        await axios.post(
+            '/profile/tags',
+            JSON.stringify({"title": tag}),
+            {
+                headers: {"Content-Type": "application/json", Authorization: "Bearer ".concat(Cookies.get('JWT'))},
+                params: {title: tag}
+
+            }
+        ).then()
+    }
+
     if (!!username) {
         return (
             <div className={style.main}>
@@ -274,7 +308,7 @@ const About = (props) => {
                             onAfterOpen={afterOpenModal2}
                             onRequestClose={closeModal2}
                             style={customStyles}
-                            contentLabel="Example Modal">
+                            contentLabel="as">
                             <h2>Изменить данные</h2>
                             <button onClick={closeModal2}>Закрыть</button>
                             <form id="Form2" className="login" onSubmit={handleSubmit2}>
@@ -301,9 +335,32 @@ const About = (props) => {
                         </Modal>
                     </div>
                 </div>
+                <div className={style.widgetBox}>
+                    <p className={style.mainTitle}>Теги</p>
+                    <button onClick={openModal3}>Изменить данные</button>
+                    <Modal
+                        isOpen={modalIsOpen3}
+                        onAfterOpen={afterOpenModal3}
+                        onRequestClose={closeModal3}
+                        style={customStyles}
+                        contentLabel="as">
+                        <h2>Изменить данные</h2>
+                        <button onClick={closeModal3}>Закрыть</button>
+                        <form id="Form3" className="login" onSubmit={handleSubmit3}>
+                            <div className="login__field">
+                                <input type="text" name="tag" className="login__input" placeholder="Tag name"/>
+                            </div>
+                            <button className="button login__submit">
+                                <span className="button__text">Пажилое подтверждение</span>
+                            </button>
+                        </form>
+                    </Modal>
+                    <p>На данный момент используейте теги: </p>
+                </div>
             </div>
         );
     }
 }
+
 
 export default About;

@@ -12,6 +12,7 @@ import Friends from "../../components/Friends/Friends";
 import Groups from "../../components/Groups/Groups";
 import Login from "../../components/Login/Login"
 import Register from "../../components/Register/Register"
+import Tags from "../../components/Tags/Friends"
 import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
 import axios from '../../redux/axios';
@@ -49,6 +50,7 @@ const Desktop = (props) => {
                         <Route path="groups" element={<Groups/>}/>
                         <Route path="login" element={<Login/>}/>
                         <Route path="register" element={<Register/>}/>
+                        <Route path="tag/*" element={<Tags/>}/>
                     </Route>
                     <Route path="*" element={<NotFoundPage/>}/>
                 </Routes>
